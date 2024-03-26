@@ -1,0 +1,45 @@
+{% extends "teams_base.html" %}
+{% block title %}Create Team Page{% endblock title %}
+{% block content %}
+
+<div class="form-content my-3 p-3">
+    <div class="row justify-content-center">
+        <div class="card shadow-lg border-0 rounded-lg mt-0 mb-3">
+            <div class="card-header justify-content-center">
+                <h3 class="font-weight-light my-4 text-center">Create Team</h3>
+            </div>
+            <div class="card-body align-items-center">
+                <form method="post" action="{% url 'create_team' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <div id="form_errors">
+                            {% for key, value in form.errors.items %}
+                            <strong>{{ value }}</strong>
+                            {% endfor %}
+                        </div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endif %}
+                    <div class="form-row">
+                        <div class="col-md-10 offset-md-1">
+                            <div class="form-group justify-content-center">
+                                {{ form.media.js }}
+                                {{ form.as_p }}
+                            </div>
+                            <div class="form-group mt-4 mb-0">
+                                <button type="submit" class="btn btn-dark btn-lg">Create Team</button>
+                                <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+                                <br><br>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

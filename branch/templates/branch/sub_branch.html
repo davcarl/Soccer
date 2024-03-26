@@ -1,0 +1,5 @@
+{% load auth_extras %}
+
+{% for sub_branch in subbranch_list %}
+<li><a class="dropdown-item" href="#">{{sub_branch.name}}</a></li>
+{% endfor %}

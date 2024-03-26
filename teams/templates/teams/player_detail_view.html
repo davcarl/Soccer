@@ -1,0 +1,72 @@
+{% extends "teams/team_detail_view.html" %}
+{% block title %}player page{% endblock title %}
+{% block content %}
+<div class="form-content my-3 p-3">
+    <div class="row justify-content-center">
+        <div class="card shadow-lg border-0 rounded-lg mt-0 mb-3">
+            <div class="card-header justify-content-center">
+                <div class="img-top">
+                    <img src="{{ player.avatar.url }} " style="cursor: pointer;" height="40px" width="40px"
+                        alt="profile pic ">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col height=">
+                    <div class="card-block px-2">
+                        <p class="card-text">
+                            <label class="small mb-1"> <b>First Name: </b>
+                                {{ player.first_name }} </label> <br />
+                            <label class="small mb-1"> <b>Last Name: </b>
+                                {{ player.last_name }} </label> <br />
+                            <label class="small mb-1"> <b>Age: </b>
+                                {{ player.age }} </label> <br />
+                            <label class="small mb-1"> <b>Sub County: </b>
+                                {{ player.sub_county }} </label> <br />
+                            <label class="small mb-1"> <b>County: </b>
+                                {{ player.county }} </label> <br />
+                            <label class="small mb-1"><b>Position:</b>
+                                {{ player.position }} </label> </br>
+                            <label class="small mb-1"><b>Team:</b>
+                                {{ player.team.team_name }} </label>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer w-100 text-muted">
+                {% if team.team_manager == request.user %}
+                <a href="{% url 'edit_player' player.pk %}"> Edit </a>
+                <button type="button" style="float:right" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Delete player
+                </button>
+                {% endif %}
+
+            </div>
+            <div class="modal fade" style="width:17rem" id="myModal">
+                <div class="modal-dialog ">
+                    <div class="modal-content ">
+
+                        <form method="POST" action="{%  url 'delete_player' player.pk %}">
+                            <div class="modal-header">
+                                <h4 class="modal-title"> Delete Player </4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h4 class="card-title"> delete {{player.first_name}} {{player.last_name}}</h4>
+                                {% csrf_token %}
+                                Are you sure you want to delete this player?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
+                                <input type="submit" style="float:right" class="btn btn-primary" value="Yes"
+                                    style="margin-bottom: 5px;" />
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}

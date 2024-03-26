@@ -1,0 +1,13 @@
+{% load auth_extras %}
+{% block branch %}
+<h3>branches</h3>
+{% for branch in branch_list %}
+<a class="nav-item nav-link" href="{% url 'branch_details' branch.pk %}">{{branch.name}} </a>
+<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="{% url 'branch_details' branch.pk %}" role="button"
+    aria-expanded="false">{{ branch.name }}</a>
+<ul class="dropdown-menu">
+    {% include 'branch/sub_branch.html' with subbranch_list=sub_branches %}
+</ul>
+</a>
+{% endfor %}
+{% endblock branch %}

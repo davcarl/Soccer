@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %} Register Page {% endblock title%}
+{% block content %}
+<div class="form-content my-3 p-3">
+    <div class="row justify-content-center">
+        <div class="card shadow-lg border-0 rounded-lg mt-0 mb-3">
+            <div class="card-header justify-content-center">
+                <img src="{{ team.logo.url }} " style="cursor: pointer;" height="40px" width="40px" alt=" logo "
+                    class="img-fluid">
+                <h3 class="card-title" style="float:right">{{team.team_name}} F.C</h3>
+                <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
+                    <li class="nav-item">
+                        <a class="nav-link show active" aria-current="true" data-bs-toggle="tab" href="#info">Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#manager">Manager</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#coach">Coach</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#players">Players</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body tab-content">
+                <div class="tab-pane active card" id="info">
+                    <h5 class="">Team Profile</h5>
+                    <p class="card-text">
+                        <label class="small m-1"> <b> Coach: </b>
+                            {{ team.coach.full_name }} </label> <br />
+                        <label class="small m-1"> <b>Team Manager: </b>
+                            {{ team.team_manager}} </label> <br />
+                        <label class="small m-1"> <b>location: </b>
+                            {{ team.location_name }} </label> <br />
+                        <label class="small m-1"> <b>Sub County: </b>
+                            {{ team.sub_county }} </label> <br />
+                        <label class="small m-1"><b>County:</b>
+                            {{ team.county }} </label>
+                    </p>
+                </div>
+                <div class="tab-pane card" id="manager">
+                    <h5 class="">Team Manager</h5>
+                    <p>
+                        {{team.team_manager}}
+                    </p>
+                </div>
+                <div class="tab-pane card" id="coach">
+                    <p class="card-text">
+                        <label class="small mb-1"> <b>First Name: </b>
+                            {{ team.coach.first_name }} </label> <br />
+                        <label class="small mb-1"> <b>Last Name: </b>
+                            {{ team.coach.last_name }} </label> <br />
+                        <label class="small mb-1"> <b>Age: </b>
+                            {{ team.coach.age }} </label> <br />
+                        <label class="small mb-1"> <b>Sub County: </b>
+                            {{ team.coach.sub_county }} </label> <br />
+                        <label class="small mb-1"> <b>County: </b>
+                            {{ team.coach.county }} </label> <br />
+                        <label class="small mb-1"><b>level:</b>
+                            {{ team.coach.caf_level }} </label><br />
+                </div>
+                <div class="tab-pane card-group" id="players">
+                    <div class="row  overflow-auto" style="max-height: 220px;">
+                        {% for player in players %}
+                        <div class="col-sm-auto text-center">
+                            <img src="{{ player.avatar.url }} " style="cursor: pointer;" class="img-fluid justify-content-center"
+                                alt=" logo ">
+                            <div class="row justify-content-center">
+                                <a href="{% url 'player_details' player.pk %}">
+                                    <h3 class="display-6 text-center">
+                                        {{player.full_name}}</h3>
+                                </a>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div>
+                            <li class="list-group-item">No players yet</li>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                {% if team.team_manager == request.user %}
+                <a style="Float:left" class=" " href="{% url 'add_player' %}">Add Player</a>
+                <a style="float:right" class=" " href="{% url 'team_update' team.pk %}">Edit Team</a>
+                {% endif %}
+                {% if request.user.is_superuser %}
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Delete Team
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        <!-- The team delete Modal -->
+        <div class="modal fade" style="width:17rem" id="myModal">
+            <div class="modal-dialog ">
+                <div class="modal-content ">
+                    {% block modal %}
+                    <form method="POST" action="{%  url 'delete_team' team.pk %}">
+                        <div class="modal-header">
+                            <h4 class="modal-title"> Delete team </4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h4 class="card-title"> delete {{team.team_name}}</h4>
+                            {% csrf_token %}
+                            Are you sure you want to delete this team?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" style="float:right" class="btn btn-default" value="Yes"
+                                style="margin-bottom: 5px;" />
+                        </div>
+                    </form>
+                </div>
+                {% endblock modal %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

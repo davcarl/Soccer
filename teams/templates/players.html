@@ -1,0 +1,15 @@
+{% load auth_extras %}
+<div class="col-lg-12">
+    <div class="page-header">
+        <h3 class="text-center display-4">PLAYERS</h3>
+    </div>
+    <div class="container-fluid">
+        {% for player in player_list  %}
+        {% include 'teams/player_view.html' %}
+    </div>
+    {% empty %}
+    <div>
+        <li class="list-group-item">No player yet</li>
+    </div>
+    {% endfor %}
+</div>

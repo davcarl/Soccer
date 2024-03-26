@@ -1,0 +1,72 @@
+{% extends "ref.html" %}
+{% block title %}referee Page{% endblock title %}
+{% block content %}
+<div class="form-content my-3 p-3">
+    <div class="row justify-content-center">
+        <div class="card shadow-lg border-0 rounded-lg mt-0 mb-3">
+            <div class="card-header justify-content-center">
+                <h3 class="font-weight-light my-4 text-center">Referee Details</h3>
+                <div class="img-top">
+                    <img src="{{ ref.avatar.url }} " style="cursor: pointer;" height="40px" width="40px"
+                        alt="profile pic ">
+                </div>
+                <div class="row">
+                    <div class="col height=">
+                        <div class="card-block px-2">
+                            <p class="card-text">
+                                <label class="small mb-1"> <b>First Name: </b>
+                                    {{ ref.first_name }} </label> <br />
+                                <label class="small mb-1"> <b>Last Name: </b>
+                                    {{ ref.last_name }} </label> <br />
+                                <label class="small mb-1"> <b>Age: </b>
+                                    {{ ref.age }} </label> <br />
+                                <label class="small mb-1"> <b>Sub County: </b>
+                                    {{ ref.sub_county }} </label> <br />
+                                <label class="small mb-1"> <b>County: </b>
+                                    {{ ref.county }} </label> <br />
+                                <label class="small mb-1"><b>level:</b>
+                                    {{ ref.caf_level }} </label><br />
+                                <label class="small mb-1"><b>position:</b>
+                                    {{ ref.position }} </label>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer w-100 text-muted">
+                    {% if request.user == ref.user %}
+                    <a href="{% url 'update_ref' ref.pk %}"> Edit </a>
+                    {% endif %}
+                    {% if request.user.is_superuser %}
+                    <button type="button" style="float:right" data-bs-toggle="modal" data-bs-target="#myModal">
+                        Delete Ref
+                    </button>
+                    {% endif %}
+
+                </div>
+                <div class="modal fade" style="width:17rem" id="myModal">
+                    <div class="modal-dialog ">
+                        <div class="modal-content ">
+                            <form method="POST" action="{%  url 'delete_ref' ref.pk %}">
+                                <div class="modal-header">
+                                    <h4 class="modal-title"> Delete ref </4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <h4 class="card-title"> delete {{ref.first_name}} {{ref.last_name}}</h4>
+                                    {% csrf_token %}
+                                    Are you sure you want to delete this ref?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn" data-bs-dismiss="modal">ref</button>
+                                    <input type="submit" style="float:right" class="btn btn-primary" value="Yes"
+                                        style="margin-bottom: 5px;" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

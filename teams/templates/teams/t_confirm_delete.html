@@ -1,0 +1,20 @@
+
+{% extends "teams_base.html" %}
+{% block modal %}
+<div class="card" style="width:17rem" >
+    <form method="POST" action="{%  url 'delete_team' team.pk %}">
+        <div class="modal-header">
+            <h4 class="modal-title">Delete team </4>
+        </div>
+        <div class="modal-body">
+            <h4 class="card-title"> delete {{team.team_name}}</h4>
+            {% csrf_token %}
+            Are you sure you want to delete this team?
+        </div>
+        <div class="modal-footer">
+            <a class="btn btn-outline-secondary" href="{% url 'teams' %}">Cancel</a>
+            <input type="submit" style="float:right" class="btn btn-default" value="Yes" style="margin-bottom: 5px;" />
+        </div>
+    </form>
+</div>
+{% endblock modal %}

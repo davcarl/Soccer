@@ -1,0 +1,39 @@
+{% extends 'home.html' %}
+{% load auth_extras %}
+{%  block title %} coach {%  endblock title %}
+{% block content %}
+<div class="form-content my-3 p-3">
+    <div class="row justify-content-center">
+        <div class="card shadow-lg border-0 rounded-lg mt-0 mb-3">
+            <div class="card-header justify-content-center">
+                <h3 class="text-center display-4">Coach</h3>
+                {% if request.user|has_group:'COACH' %}
+                <a href="{% url 'create_coach' %}" class="nav-item nav-link">
+                    <h5 class="text-end"> Create Coach </h5>
+                </a>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <div class="row  overflow-auto" style="max-height: 750px;">
+                    {% for coach in coach_list %}
+                    <div class="col-sm-auto text-center">
+                        <img src="{{ coach.avatar.url }} " style="cursor: pointer;" class="img-fluid justify-content-center"
+                            alt=" logo ">
+                        <div class="row justify-content-center">
+                            <a href="{% url 'coach_details' coach.pk %}">
+                                <h3 class="display-6 text-center">
+                                    {{coach.full_name}} </h3>
+                            </a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div>
+                        <li class="list-group-item">No coaches yet</li>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

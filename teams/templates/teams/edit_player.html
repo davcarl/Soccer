@@ -1,0 +1,49 @@
+{% extends "teams_base.html" %}
+{% block title %}update Team Page{% endblock title %}
+{% block content %}
+<div class="form-content my-3 p-3">
+    <div class="row justify-content-center">
+        <div class="card shadow-lg border-0 rounded-lg mt-0 mb-3">
+            <div class="card-header justify-content-center">
+                <h3 class="font-weight-light my-4 text-center">Update player</h3>
+                <div class="img-top">
+                    <img src="{{ player.avatar.url }} " style="cursor: pointer;" height="40px" width="40px"
+                        alt=" logo ">
+                    {{player.full_name}}
+                </div>
+            </div>
+            <div class="card-body">
+                {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <div id="form_errors">
+                        {% for key, value in form.errors.items %}
+                        <strong>{{ value }}</strong>
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endif %}
+                <div class="form-content">
+                    <form method="post" action="{% url 'edit_player' player.pk %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-10 justify-cntent-center">
+                                <div class="form-group">
+                                    {{ form.media.js }}
+                                    {{ form.as_p }}
+                                </div>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-dark btn-lg">Update Player</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
