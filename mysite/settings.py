@@ -80,14 +80,6 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
 	'default': {
-		"""
-        'ENGINE': 'django.db.backends.postgresql',
-		'NAME': 'soccer',
-		'USER': 'root',
-		'PASSWORD': 'root',
-		'HOST': '127.0.0.1',
-		'PORT': '5432'
-		"""
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
 	}
@@ -126,16 +118,24 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+# Define STATIC_ROOT for collecting static files during deployment
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
+
+# Define STATIC_URL for serving static files
 STATIC_URL = '/static/'
-# path for media files
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# Define MEDIA_ROOT for storing media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Define MEDIA_URL for serving media files
 MEDIA_URL = '/media/'
 
-STATICFILES_DIRS = [     
-	os.path.join('/mnt/d/davi/index/assets') 
-	]
 USE_DJANGO_JQUERY = True
+JQUERY_URL = None
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
