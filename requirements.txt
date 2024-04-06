@@ -2,9 +2,9 @@ asgiref==3.8.1
 Django==5.0.4
 django-case-insensitive-field==1.0.7
 django-smart-selects==1.6.0 
-''' line 60, 146 change to  
-choices = property(_get_choices, ChoiceField._set_choices) 
-if django v less than 5.0 '''
+#line 60, 146 change to  
+#choices = property(_get_choices, ChoiceField._set_choices) 
+#if django v less than 5.0 "
 pillow==10.3.0
 setuptools==69.2.0
 six==1.16.0
